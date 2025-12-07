@@ -2,9 +2,9 @@ name: Playwright BDD Tests
 
 on:
     push:
-        branches: [develop, playwright-2]
+        branches: [develop]
     pull_request:
-        branches: [develop, playwright-2]
+        branches: [develop]
 
 jobs:
     test:

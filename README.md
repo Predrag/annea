@@ -54,6 +54,10 @@ This project contains a simple static email web application and automated UI tes
    ```
 2. View the report at `report.html`.
 
+### CI/CD: GitHub Actions
+
+Tests are automatically run on every push or pull request to the `develop` branche using GitHub Actions. The resulting HTML report is available as an artifact in the workflow run details on GitHub.
+
 ## Usage
 
 - Log in with email: `test@user.com` and password: `password123`
