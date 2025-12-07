@@ -16,7 +16,7 @@ expect.set_options(timeout=1000)
 def start_server():
     root_dir = os.path.dirname(os.path.abspath(__file__))
     root_dir = os.path.abspath(os.path.join(root_dir, ".."))
-    proc = subprocess.Popen([sys.executable, "-m", "http.server", "8080"], cwd=root_dir)
+    proc = subprocess.Popen([sys.executable, "-m", "http.server", "8000"], cwd=root_dir)
     time.sleep(1)
     yield
     proc.terminate()
