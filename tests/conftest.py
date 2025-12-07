@@ -27,7 +27,9 @@ def start_server():
 def browser() -> Generator[Browser, None, None]:
     with sync_playwright() as p:
         p.selectors.set_test_id_attribute("data-testid")
-        browser = p.chromium.launch(headless=False)
+        # Detect GitHub Actions environment
+        headless_mode = bool(os.environ.get("GITHUB_ACTIONS", "") == "true")
+        browser = p.chromium.launch(headless=headless_mode)
         yield browser
         browser.close()
 
