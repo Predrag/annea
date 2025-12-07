@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Simple Email App</title>
+    <title>Email App</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -29,7 +29,57 @@
       <div id="email-section" class="hidden">
         <h2>Compose Email</h2>
         <label>To</label>
-        <input type="email" id="to-email" data-testid="to-email" required />
+        <input
+          type="email"
+          id="to-email"
+          data-testid="to-email"
+          required
+          style="width: 100%; margin-bottom: 8px"
+        />
+        <div
+          id="contacts-directory"
+          style="
+            min-width: 180px;
+            border: 1px solid #ccc;
+            padding: 8px;
+            border-radius: 4px;
+            background: #fafafa;
+            margin-bottom: 12px;
+          "
+        >
+          <strong>Contacts</strong>
+          <ul style="list-style: none; padding-left: 0; margin: 8px 0 0 0">
+            <li>
+              <a
+                href="#"
+                onclick="selectContact('test.user@gmail.com'); return false;"
+                data-testid="test.user@gmail.com"
+                >Test User (test.user@gmail.com)</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="selectContact('test1.user@gmail.com'); return false;"
+                data-testid="test1.user@gmail.com"
+                >Test1 User (test1.user@gmail.com)</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="selectContact('test2.user@example.com'); return false;"
+                data-testid="test2.user@gmail.com"
+                >Test2 User (test2.user@gmail.com)</a
+              >
+            </li>
+          </ul>
+        </div>
+        <script>
+          function selectContact(email) {
+            document.getElementById("to-email").value = email;
+          }
+        </script>
         <label>Subject</label>
         <input type="text" id="subject" data-testid="subject" required />
         <label>Body</label>

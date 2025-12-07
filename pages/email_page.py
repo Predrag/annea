@@ -1,6 +1,8 @@
 from playwright.sync_api import Page
 
+
 class EmailPage:
+
     def __init__(self, page: Page):
         self.page = page
         self.to_email = page.get_by_test_id('to-email')
@@ -12,7 +14,7 @@ class EmailPage:
         self.logout_button = page.get_by_test_id('logout')
 
     def compose_email(self, to: str, subject: str, body: str):
-        self.to_email.fill(to)
+        self.page.get_by_test_id(to).click()
         self.subject.fill(subject)
         self.body.fill(body)
 
@@ -21,9 +23,6 @@ class EmailPage:
 
     def send_email(self):
         self.send_email_button.click()
-
-    def get_status(self) -> str:
-        return self.email_status.text_content() or ""
 
     def logout(self):
         self.logout_button.click()

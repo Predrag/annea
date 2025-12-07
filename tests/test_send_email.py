@@ -44,13 +44,12 @@ def send_email(page: Page, email_page: EmailPage):
     
 
 @then('the email should be sent successfully with a status message')
-def email_sent(page: Page):
-    email_status = page.get_by_test_id('email-status')
-    expect(email_status).to_have_text(f'Email sent to {to_email} with attachment: {attachment_filename}')
+def email_sent(email_page: EmailPage):
+    status_message = email_page.email_status
+    expect(status_message).to_have_text(f'Email sent to {to_email} with attachment: {attachment_filename}')
 
 @then('the user logs out')
-def logout(page: Page, login_page: LoginPage):
-    logout_button = page.get_by_test_id('logout')
-    logout_button.click()
+def logout(page: Page, login_page: LoginPage, email_page: EmailPage):
+    email_page.logout()
     expect(login_page.login_header).to_be_visible()
 
