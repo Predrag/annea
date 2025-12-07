@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simple Email App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="login-section">
+        <h2>Login</h2>
+        <label>Email</label>
+        <input type="email" id="login-email" data-testid="email" required />
+        <label>Password</label>
+        <input
+          type="password"
+          id="login-password"
+          data-testid="password"
+          required
+        />
+        <button onclick="login()" data-testid="submit">Login</button>
+        <div
+          id="login-error"
+          data-testid="login-error"
+          style="color: red"
+        ></div>
+      </div>
+
+      <div id="email-section" class="hidden">
+        <h2>Compose Email</h2>
+        <label>To</label>
+        <input type="email" id="to-email" data-testid="to-email" required />
+        <label>Subject</label>
+        <input type="text" id="subject" data-testid="subject" required />
+        <label>Body</label>
+        <textarea id="body" data-testid="body" rows="4" required></textarea>
+        <label>Attachment</label>
+        <input type="file" id="attachment" data-testid="attachment" />
+        <button onclick="sendEmail()" data-testid="send-email">
+          Send Email
+        </button>
+        <button
+          onclick="logout()"
+          data-testid="logout"
+          style="margin-top: 10px"
+        >
+          Logout
+        </button>
+        <div
+          id="email-status"
+          data-testid="email-status"
+          style="color: green"
+        ></div>
+      </div>
+    </div>
+    <script>
+      function login() {
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+        if (email === "test@user.com" && password === "password123") {
+          document.getElementById("login-section").classList.add("hidden");
+          document.getElementById("email-section").classList.remove("hidden");
+          document.getElementById("login-error").textContent = "";
+        } else {
+          document.getElementById("login-error").textContent =
+            "Invalid credentials.";
+        }
+      }
+
+      function sendEmail() {
+        const to = document.getElementById("to-email").value;
+        const subject = document.getElementById("subject").value;
+        const body = document.getElementById("body").value;
+        const attachment = document.getElementById("attachment").files[0];
+        if (to && subject && body) {
+          let msg = `Email sent to ${to}`;
+          if (attachment) {
+            msg += ` with attachment: ${attachment.name}`;
+          }
+          document.getElementById("email-status").textContent = msg;
+          setTimeout(() => {
+            document.getElementById("email-status").textContent = "";
+          }, 3000);
+        } else {
+          document.getElementById("email-status").textContent =
+            "Please fill all fields.";
+        }
+      }
+
+      function logout() {
+        document.getElementById("email-section").classList.add("hidden");
+        document.getElementById("login-section").classList.remove("hidden");
+        document.getElementById("login-email").value = "";
+        document.getElementById("login-password").value = "";
+        document.getElementById("to-email").value = "";
+        document.getElementById("subject").value = "";
+        document.getElementById("body").value = "";
+        document.getElementById("attachment").value = "";
+        document.getElementById("email-status").textContent = "";
+      }
+    </script>
+  </body>
+</html>
