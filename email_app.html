@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Email App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container" style="max-width: 500px; margin: 20px auto">
+      <div id="login-section">
+        <h2 data-testid="login-header">Login</h2>
+        <label>Email</label>
+        <input type="email" id="login-email" data-testid="email" required />
+        <label>Password</label>
+        <input
+          type="password"
+          id="login-password"
+          data-testid="password"
+          required
+        />
+        <button onclick="login()" data-testid="submit">Login</button>
+        <div
+          id="login-error"
+          data-testid="login-error"
+          style="color: red"
+        ></div>
+      </div>
+
+      <div
+        id="email-section"
+        style="
+          display: none;
+          flex-direction: row;
+          align-items: flex-start;
+          min-height: 350px;
+        "
+      >
+        <div
+          id="contacts-directory"
+          style="
+            min-width: 200px;
+            max-width: 240px;
+            border-right: 1px solid #ccc;
+            padding: 16px 40px 16px 0;
+            background: #fafafa;
+            height: 100%;
+          "
+        >
+          <strong>Contacts</strong>
+          <ul style="list-style: none; padding-left: 0; margin: 8px 0 0 0">
+            <li>
+              <a
+                href="#"
+                onclick="selectContact('test.user@gmail.com'); return false;"
+                data-testid="test.user@gmail.com"
+                >Test User (test.user@gmail.com)</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="selectContact('test1.user@gmail.com'); return false;"
+                data-testid="test1.user@gmail.com"
+                >Test1 User (test1.user@gmail.com)</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="selectContact('test2.user@example.com'); return false;"
+                data-testid="test2.user@gmail.com"
+                >Test2 User (test2.user@gmail.com)</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div
+          style="
+            flex: 1;
+            padding-left: 24px;
+            padding-right: 200px;
+            min-width: 400px;
+          "
+        >
+          <h2>Compose Email</h2>
+          <label>To</label>
+          <input
+            type="email"
+            id="to-email"
+            data-testid="to-email"
+            required
+            style="width: 100%; margin-bottom: 8px"
+          />
+          <script>
+            function selectContact(email) {
+              document.getElementById("to-email").value = email;
+            }
+          </script>
+          <label>Subject</label>
+          <input type="text" id="subject" data-testid="subject" required />
+          <label>Body</label>
+          <textarea id="body" data-testid="body" rows="4" required></textarea>
+          <label>Attachment</label>
+          <input type="file" id="attachment" data-testid="attachment" />
+          <button onclick="sendEmail()" data-testid="send-email">
+            Send Email
+          </button>
+          <button
+            onclick="logout()"
+            data-testid="logout"
+            style="margin-top: 10px"
+          >
+            Logout
+          </button>
+          <div
+            id="email-status"
+            data-testid="email-status"
+            style="color: green"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function login() {
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+        if (email === "test@user.com" && password === "password123") {
+          document.getElementById("login-section").classList.add("hidden");
+          const emailSection = document.getElementById("email-section");
+          emailSection.style.display = "flex";
+          document.getElementById("login-error").textContent = "";
+        } else {
+          document.getElementById("login-error").textContent =
+            "Invalid credentials.";
+        }
+      }
+
+      function sendEmail() {
+        const to = document.getElementById("to-email").value;
+        const subject = document.getElementById("subject").value;
+        const body = document.getElementById("body").value;
+        const attachment = document.getElementById("attachment").files[0];
+        if (to && subject && body) {
+          let msg = `Email sent to ${to}`;
+          if (attachment) {
+            msg += ` with attachment: ${attachment.name}`;
+          }
+          document.getElementById("email-status").textContent = msg;
+          setTimeout(() => {
+            document.getElementById("email-status").textContent = "";
+          }, 3000);
+        } else {
+          document.getElementById("email-status").textContent =
+            "Please fill all fields.";
+        }
+      }
+
+      function logout() {
+        const emailSection = document.getElementById("email-section");
+        emailSection.style.display = "none";
+        document.getElementById("login-section").classList.remove("hidden");
+        document.getElementById("login-email").value = "";
+        document.getElementById("login-password").value = "";
+        document.getElementById("to-email").value = "";
+        document.getElementById("subject").value = "";
+        document.getElementById("body").value = "";
+        document.getElementById("attachment").value = "";
+        document.getElementById("email-status").textContent = "";
+      }
+    </script>
+  </body>
+</html>
